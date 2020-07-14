@@ -71,7 +71,12 @@ namespace CAL_Transactions.Services
             using (HttpClient client = new HttpClient())
             {
                 string urlParameters = baseURL + "/SaveMonthlyTransactions";
-
+                // Add an Accept header for JSON format.
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+                // Add Bearer token to request
+                client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", token);
                 // Save data using external API
                 HttpResponseMessage response = await client.PostAsJsonAsync<IEnumerable<MonthlyPayments>>(urlParameters, payments);
                 
