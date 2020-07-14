@@ -67,10 +67,10 @@ namespace CAL_Transactions.Services
                 {
                     debitDate = monthly.Key,
                     totalPayment = monthly.Sum(item => item.amount)
-                });
+                }).ToList();
             using (HttpClient client = new HttpClient())
             {
-                string urlParameters = baseURL + "/Authenticate";
+                string urlParameters = baseURL + "/SaveMonthlyTransactions";
 
                 // Save data using external API
                 HttpResponseMessage response = await client.PostAsJsonAsync<IEnumerable<MonthlyPayments>>(urlParameters, payments);
